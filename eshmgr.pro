@@ -25,7 +25,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-        action_view.cpp \
         actions_list.cpp \
         eshimapi.cpp \
         gettoken.cpp \
