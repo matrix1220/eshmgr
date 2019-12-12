@@ -53,6 +53,7 @@ QJsonObject eshimApi::method(QString method, QJsonObject temp){
 //    }
     return temp;
 }
+// alsdflasjhd
 void eshimApi::showMessage(QJsonObject response){
     QMessageBox temp;
     if(response.value("ok").toBool()) {
