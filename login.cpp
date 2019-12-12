@@ -3,7 +3,7 @@
 #include "actions_list.h"
 #include <QFile>
 #include <QTextStream>
-#include <eshimapi.h>
+#include "eshimapi.h"
 #include <QCloseEvent>
 
 login::login(QWidget *parent) :
@@ -11,6 +11,7 @@ login::login(QWidget *parent) :
     ui(new Ui::login)
 {
     ui->setupUi(this);
+    QApplication::restoreOverrideCursor();
 }
 
 login::~login()
@@ -20,15 +21,16 @@ login::~login()
 
 void login::on_pushButton_clicked()
 {
-    ui->label->setText("Wrong token");
+    ui->label->setText("Token");
     QString token = ui->lineEdit->text();
-    emit giveToken(token);
-}
-void login::gotFail()
-{
-    ui->label->setText("Wrong token");
+    if(eshimApi::checkUser(token)) {
+        this->hide();
+    } else {
+        ui->label->setText("Wrong token");
+    }
 }
 void login::reject()
 {
+    //QApplication::quit();
     exit(EXIT_SUCCESS);
 }

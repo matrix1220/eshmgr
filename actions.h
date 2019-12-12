@@ -2,16 +2,16 @@
 #define ACTIONS_H
 
 #include <QObject>
+#include <QJsonObject>
 
-class actions : public QObject
+class Action : public QObject
 {
     Q_OBJECT
 public:
-    explicit actions(QObject *parent = nullptr);
-
-signals:
-
-public slots:
+    Action(QJsonObject temp,QObject *parent = nullptr);
+    int id;
+    int user_id;
+    int type;
+    QString key;
 };
-
 #endif // ACTIONS_H

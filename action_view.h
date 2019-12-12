@@ -17,10 +17,11 @@ public:
     //action_view(int,QJsonObject,QWidget *parent = nullptr);
     ~action_view();
     int status;
-    void handleStat(int);
-    QJsonObject org_data;
-    void sharedata(QJsonObject);
-    QJsonObject gatherdata();
+    void handle_status();
+    QJsonObject orginal_data;
+    QJsonObject current_data;
+    void share_data();
+    void gather_data();
     virtual void reject();
 
 private slots:
@@ -29,6 +30,8 @@ private slots:
     void on_pushButton_2_clicked();
 
     void on_pushButton_3_clicked();
+
+    void on_textEdit_textChanged();
 
 private:
     Ui::action_view *ui;

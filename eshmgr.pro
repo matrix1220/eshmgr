@@ -26,22 +26,26 @@ CONFIG += c++11
 
 SOURCES += \
         action_view.cpp \
+        actions.cpp \
         actions_list.cpp \
         eshimapi.cpp \
         gettoken.cpp \
         main.cpp \
         login.cpp \
-        user.cpp \
+        mainmenu.cpp \
+        stats.cpp \
         value_view.cpp \
         values_list.cpp
 
 HEADERS += \
         action_view.h \
+        actions.h \
         actions_list.h \
         eshimapi.h \
         gettoken.h \
         login.h \
-        user.h \
+        mainmenu.h \
+        stats.h \
         value_view.h \
         values_list.h
 
@@ -49,6 +53,8 @@ FORMS += \
         action_view.ui \
         actions_list.ui \
         login.ui \
+        mainmenu.ui \
+        stats.ui \
         value_view.ui \
         values_list.ui
 

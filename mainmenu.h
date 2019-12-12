@@ -3,6 +3,7 @@
 
 #include <QDialog>
 
+
 namespace Ui {
 class mainMenu;
 }
@@ -14,6 +15,11 @@ class mainMenu : public QDialog
 public:
     explicit mainMenu(QWidget *parent = nullptr);
     ~mainMenu();
+
+private slots:
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
 
 private:
     Ui::mainMenu *ui;

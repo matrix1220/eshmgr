@@ -14,6 +14,7 @@ class stats : public QDialog
 public:
     explicit stats(QWidget *parent = nullptr);
     ~stats();
+    void reload();
 
 private:
     Ui::stats *ui;

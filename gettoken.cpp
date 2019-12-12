@@ -5,41 +5,12 @@
 #include <QWidget>
 #include <QEventLoop>
 #include <QDebug>
+#include <QApplication>
 getToken::getToken(QObject *parent) : QObject(parent)
 {
    token_file = new QFile("token.txt");
 }
-void getToken::init(){
-    getToken t;
-    if(t.valid()) {
-        if(!check(t.get())) {
-            t.show();
-        }
-    } else {
-        t.show();
-    }
-}
-void getToken::show() {
-    login w;
-    QWidget::connect(&w,SIGNAL(giveToken(QString)),this,SLOT(tokenpassed(QString)));
-    QWidget::connect(this,SIGNAL(tokenfail()),&w,SLOT(gotFail()));
-    w.show();
-    QEventLoop waitLoop;
-    QObject::connect(this,SIGNAL(tokensuccess()), &waitLoop, SLOT(quit()));
-    waitLoop.exec();
-}
-void getToken::tokenpassed(QString t){
-    //qDebug() << check(token);
-    if(check(t)){
-        this->set(t);
-        emit tokensuccess();
-    } else {
-        emit tokenfail();
-    }
-}
-bool getToken::check(QString token) {
-    return eshimApi::initUser(token);
-}
+
 getToken::~getToken()
 {
     delete token_file;
@@ -47,6 +18,10 @@ getToken::~getToken()
 bool getToken::valid()
 {
     return token_file->exists();
+}
+void getToken::make_invalid()
+{
+    token_file->remove();
 }
 
 QString getToken::get()
@@ -64,4 +39,13 @@ void getToken::set(QString token)
     QTextStream tout(token_file);
     tout << token;
     token_file->close();
+}
+void getToken::static_make_invalid() {
+    getToken temp;
+    temp.make_invalid();
+}
+void getToken::static_set(QString token)
+{
+    getToken temp;
+    temp.set(token);
 }

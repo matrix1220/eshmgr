@@ -1,16 +1,15 @@
-#include "login.h"
 #include <QApplication>
 #include <QDebug>
-#include <QJsonObject>
-#include "gettoken.h"
 #include "eshimapi.h"
-#include "actions_list.h"
+#include "mainmenu.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    getToken::init();
-    //jsdhfakjhvb
-    actions_list w;
-    w.show();
+    eshimApi::initUser();
+    mainMenu main;
+    main.show();
+    //ewrjlsskhm
+    //actions_list w;
+    //w.show();
     return a.exec();
 }

@@ -13,19 +13,22 @@ class value_view : public QDialog
     Q_OBJECT
 
 public:
-    explicit value_view(int st,int,const QJsonObject &da,QWidget *parent = nullptr);
+    explicit value_view(int,const QJsonObject &,QWidget *parent = nullptr);
     ~value_view();
     int status;
-    void handleStat(int);
-    QJsonObject org_data;
-    void sharedata(QJsonObject);
-    QJsonObject gatherdata();
+    void handle_status();
+    QJsonObject orginal_data;
+    QJsonObject current_data;
+    void share_data();
+    void gather_data();
     int action_id;
 
 private slots:
     void on_pushButton_2_clicked();
 
     void on_pushButton_clicked();
+
+    void on_textEdit_textChanged();
 
 private:
     Ui::value_view *ui;

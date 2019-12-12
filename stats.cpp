@@ -12,3 +12,8 @@ stats::~stats()
 {
     delete ui;
 }
+
+void stats::reload()
+{
+
+}

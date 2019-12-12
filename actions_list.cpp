@@ -1,10 +1,12 @@
 #include "actions_list.h"
 #include "ui_actions_list.h"
 #include "eshimapi.h"
+#include "gettoken.h"
+#include "action_view.h"
 #include <QJsonObject>
 #include <QJsonArray>
-#include "action_view.h"
 #include <QMessageBox>
+
 actions_list::actions_list(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::actions_list)
@@ -13,12 +15,13 @@ actions_list::actions_list(QWidget *parent) :
     refreshlist();
 }
 void actions_list::refreshlist(){
+    int page = ui->spinBox->value();
     ui->listWidget->clear();
-    foreach (const QJsonValue & t, eshimApi::method("getAllActions").value("result").toArray()){
-        QListWidgetItem * t2 = new QListWidgetItem(ui->listWidget);
-        t2->setData(100,t.toObject());
-        t2->setText(t.toObject().value("key").toString());
-        ui->listWidget->addItem(t2);
+    foreach (const QJsonValue & item, eshimApi::getAllActions(page)){
+        QListWidgetItem * widget_item = new QListWidgetItem(ui->listWidget);
+        widget_item->setData(100,QVariant(item));
+        widget_item->setText(item.toObject().value("key").toString());
+        ui->listWidget->addItem(widget_item);
     }
 }
 
@@ -34,11 +37,9 @@ void actions_list::on_pushButton_3_clicked()
 
 void actions_list::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
-    this->hide();
-    action_view w(0,item->data(100).toJsonObject(),this);
-    w.setModal(true);
-    w.exec();
-    this->show();
+    action_view actionview(0,item->data(100).toJsonObject(),this);
+    actionview.setModal(true);
+    actionview.exec();
     refreshlist();
 }
 
@@ -50,18 +51,41 @@ void actions_list::on_pushButton_2_clicked()
      ui->listWidget->currentItem()->data(100).toJsonObject().value("key").toString() +"?",
      QMessageBox::Yes|QMessageBox::No);
     if (reply == QMessageBox::Yes) {
-        eshimApi::deleteAction(ui->listWidget->currentItem()->data(100).toJsonObject().value("key").toInt());
-        QMessageBox::information(this,"Done","Deleted");
+        eshimApi::deleteAction(ui->listWidget->currentItem()->data(100).toJsonObject().value("id").toInt());
     }
     refreshlist();
 }
 
 void actions_list::on_pushButton_clicked()
 {
-    this->hide();
     action_view w(2,QJsonObject(),this);
     w.setModal(true);
     w.exec();
     refreshlist();
-    this->show();
+}
+
+void actions_list::on_pushButton_5_clicked()
+{
+    ui->spinBox->setValue(ui->spinBox->value()+1);
+    refreshlist();
+}
+
+void actions_list::on_pushButton_4_clicked()
+{
+    if(ui->spinBox->value()>1){
+        ui->spinBox->setValue(ui->spinBox->value()-1);
+        refreshlist();
+    }
+}
+
+void actions_list::on_spinBox_editingFinished()
+{
+    refreshlist();
+}
+
+void actions_list::on_pushButton_6_clicked()
+{
+    getToken::static_make_invalid();
+    hide();
+    eshimApi::initUser();
 }

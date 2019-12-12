@@ -10,18 +10,16 @@ class getToken : public QObject
 public:
     explicit getToken(QObject *parent = nullptr);
     ~getToken();
-    static void init();
-signals:
-    void tokenfail();
-    void tokensuccess();
-private slots:
-    void tokenpassed(QString);
-private:
-    QFile * token_file;
     QString get();
     void set(QString);
     bool valid();
-    static bool check(QString);
-    void show();
+    void make_invalid();
+
+    static QString static_get();
+    static void static_set(QString);
+    static bool static_valid();
+    static void static_make_invalid();
+private:
+    QFile * token_file;
 };
 #endif // GETTOKEN_H

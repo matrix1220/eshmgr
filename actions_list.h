@@ -25,6 +25,14 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_pushButton_5_clicked();
+
+    void on_pushButton_4_clicked();
+
+    void on_spinBox_editingFinished();
+
+    void on_pushButton_6_clicked();
+
 private:
     Ui::actions_list *ui;
     void refreshlist();

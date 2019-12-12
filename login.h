@@ -18,10 +18,8 @@ public:
     virtual void reject();
 
 signals:
-    void giveToken(QString);
 private slots:
     void on_pushButton_clicked();
-    void gotFail();
 
 private:
     Ui::login *ui;
